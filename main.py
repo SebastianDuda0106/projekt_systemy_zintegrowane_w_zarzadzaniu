@@ -1,3 +1,4 @@
+#Autorzy: Sebastian Duda, Jan Bielecki
 def main():
     print("Hello from projekt-systemy-zintegrowane-w-zarzadzaniu!")
     hello(str(input("what is your name?\n")))
