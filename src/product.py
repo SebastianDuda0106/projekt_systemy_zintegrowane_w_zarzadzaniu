@@ -48,4 +48,4 @@ class product:
         print(self.name)
         print(self.product_info)
         print('Czas realizacji    ' ,self.production_time)
-        print('Na stanie          ' ,self.stock)
+        print('Na stanie          ' ,self.stock,'\n')

@@ -82,8 +82,8 @@ class component:
         print('Poziom BOM                   ', self.BOM_level)
         print('Na stanie                    ', self.stock)
         if self.req_amount > 1:
-            print('Ilość w BOM                  ', self.req_amount)
-
+            print('Ilość w BOM                  ', self.req_amount,)
+        print('\n')
 
 
 

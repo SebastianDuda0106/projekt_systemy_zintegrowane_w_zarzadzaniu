@@ -4,13 +4,14 @@ from src.component import component
 from src.menu import menu,menup
 
 def main():
-    weeks=7
+    production_amount=[0,0,0,20,0,60,30]
+    weeks=len(production_amount)
     zeszyt = product(
         name='zeszyt',
         production_time=2,
         stock=20,
         req_amount=[0,0,20,10,50,0,0],
-        production_amount=[0,0,0,20,0,60,30],
+        production_amount=production_amount,
         weeks=weeks
     )
     papier = component(
