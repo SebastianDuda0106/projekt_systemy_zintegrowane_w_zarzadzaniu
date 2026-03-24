@@ -2,14 +2,16 @@ import numpy as np
 import pandas as pd
 
 class product:
-    def __init__(self,production_time,stock,req_amount,weeks):
+    def __init__(self,production_time,production_amount,stock,req_amount,weeks):
+        self.production_amount = production_amount
         self.production_time = production_time
         self.stock = stock
         self.req_amount = req_amount
         self.weeks = weeks
         self.createTable(weeks)
         self.product_info
-        self.fillRequiredAmount()
+        self.fillValues()
+        self.calculateAvailable()
 
 
     def createTable(self, weeks):
@@ -24,11 +26,23 @@ class product:
             'Dostępne'
             ]
         
-    def fillRequiredAmount(self):
+    def fillValues(self):
         if(len(self.req_amount) == self.weeks):
             self.product_info.iloc[0] = self.req_amount
         else:
             print('wrong size of req_amount list')
+        if(len(self.production_amount) == self.weeks):
+            self.product_info.iloc[1] = self.production_amount
+        else:
+            print('wrong size of req_amount list')
+
+    def calculateAvailable(self):
+        self.product_info.loc['Dostępne',0] = self.stock
+        for i in range(self.weeks-1):
+            print(i)
+            self.product_info.loc['Dostępne',i+1] = self.product_info.loc['Produkcja',i+1] 
+            +self.product_info.loc['Dostępne',i] 
+            -self.product_info.loc['Przewidywany popyt',i+1]
     
     def info(self):
         print(self.product_info)

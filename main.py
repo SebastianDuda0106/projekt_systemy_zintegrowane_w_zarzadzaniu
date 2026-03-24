@@ -12,6 +12,7 @@ def main():
         production_time=1,
         stock=20,
         req_amount=[0,0,20,10,50,0,0],
+        production_amount=[0,0,20,0,0,30,0],
         weeks=7
     )
     zeszyt.info()
