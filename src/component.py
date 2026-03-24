@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import math
 
 class component:
     def __init__(self,production_time,batch_size,BOM_level,stock,weeks,parent_assembly_time,parent_demand,req_amount=1):
@@ -53,10 +54,10 @@ class component:
             print('Ilość w BOM                  ', self.req_amount)
 
     def calculate(self):
-        last_week_order
+        last_week_order = 0
         total_required = self.product_info.loc['Całkowite zapotrzebowanie'].sum()
         print(total_required - self.stock)
-        number_of_orders = (total_required / self.batch_size).ceil()
+        number_of_orders = math.ceil(int(total_required) / int(self.batch_size))
 
         for i in range(self.weeks, 1, -1):
             if(self.product_info.loc['Całkowite zapotrzebowanie',i] > 0):
