@@ -35,8 +35,9 @@ class component:
         ]
         self.product_info.columns +=1
 
-    def getTotalDemand(self):
-        temp_list = copy.deepcopy(self.parent_demand)
+    def getTotalDemand(self,parent_demand=0):
+        if parent_demand==0:temp_list = copy.deepcopy(self.parent_demand)
+        else: temp_list = copy.deepcopy(parent_demand)
         for i in range(self.parent_assembly_time):
             temp_list.pop(0)
             temp_list.append(0)

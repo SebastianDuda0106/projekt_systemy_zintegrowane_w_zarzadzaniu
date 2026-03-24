@@ -1,7 +1,7 @@
 #Autorzy: Sebastian Duda, Jan Bielecki
 from src.product import product
 from src.component import component
-from src.menu import menu
+from src.menu import menu,menup
 
 def main():
     weeks=7
@@ -44,14 +44,32 @@ def main():
         parent_demand=okladka.product_info.loc['Planowane zamówienia'].tolist(),
         weeks=weeks
     )
+    lista1=['Wyświetl','Edytuj','Przelicz','Zamknij']
+    lista1_1=['Wszystko','Główny Harmonogram Produkcji','Rekordy MRP']
+    lista1_1_2=['[1]papier','[1]okładka','[2]skóra']
+    lista2_1=['Główny Harmonogram Produkcji','Rekordy MRP']
+    lista2_1_1_r=['Przewidywany popyt',
+        'Produkcja',
+        'Dostępne',
+        'Czas realizacji',
+        'Na stanie']
+    lista2_1_2=['[1]papier','[1]okładka','[2]skóra']
+    lista2_1_2_r=['Całkowite zapotrzebowanie',
+                'Planowane przyjęcia',
+                'Przewidywane na stanie',
+                'Zapotrzebowanie netto',
+                'Planowane zamówienia',
+                'Planowane przyjęcie zamówień',
+                'Czas realizacji',
+                'Wielkość parii',
+                'Na stanie',
+                'Ilość w BOM']
     run=1
     while run==1:
         #menu główne
-        lista1=['Wyświetl','Edytuj','Przelicz','Zamknij']
         match (menu(lista1)):
             case 1:
                 #wyswietlanie
-                lista1_1=['Wszystko','Główny Harmonogram Produkcji','Rekordy MRP']
                 match(menu(lista1_1)):
                     case 1:
                         zeszyt.info()
@@ -61,23 +79,16 @@ def main():
                     case 2:
                         zeszyt.info()
                     case 3:
-                        lista1_1_2=['[1]papier','[1]okładka','[2]skóra']
                         match(menu(lista1_1_2)):
                             case 1: papier.info()
                             case 2: okladka.info()
                             case 3: skora.info()
             case 2:
                 #edytowanie
-                lista2_1=['Główny Harmonogram Produkcji','Rekordy MRP']
                 match(menu(lista2_1)):
                     case 1:
                         zeszyt.info()
                         #listy dla GHP
-                        lista2_1_1_r=['Przewidywany popyt',
-                            'Produkcja',
-                            'Dostępne',
-                            'Czas realizacji',
-                            'Na stanie']
                         wybor=menu(lista2_1_1_r)
                         match(wybor):
                             case 1:wiersz='Przewidywany popyt'
@@ -87,7 +98,7 @@ def main():
                             case 5:wiersz='Na stanie'
                         if wybor in range(0,4):
                             #lista2_1_t=[''] #tutaj wpisać listę z numerami tygodni
-                            kolumna=menu(list(map(lambda x:x,range(1,zeszyt.weeks+1))))
+                            kolumna=menup(list(map(lambda x:x,range(1,zeszyt.weeks+1))))
                         user_input='start'
                         while not(isinstance(user_input,int)):
                             try:
@@ -101,17 +112,7 @@ def main():
                         elif wybor == 5: zeszyt.stock=user_input
                     case 2:
                         #listy dla MRP
-                        lista2_1_2=['[1]papier','[1]okładka','[2]skóra']
-                        lista2_1_2_r=['Całkowite zapotrzebowanie',
-                                    'Planowane przyjęcia',
-                                    'Przewidywane na stanie',
-                                    'Zapotrzebowanie netto',
-                                    'Planowane zamówienia',
-                                    'Planowane przyjęcie zamówień',
-                                    'Czas realizacji',
-                                    'Wielkość parii',
-                                    'Na stanie',
-                                    'Ilość w BOM']
+                        
                         match(menu(lista2_1_2)):
                             case 1:
                                 papier.info()
@@ -129,7 +130,7 @@ def main():
                                     case 10:wiersz='Ilość w BOM'
                                 if wybor in range(0,7):
                                     #lista2_1_t=[''] #tutaj wpisać listę z numerami tygodni
-                                    kolumna=menu(list(map(lambda x:x,range(1,papier.weeks+1))))
+                                    kolumna=menup(list(map(lambda x:x,range(1,papier.weeks+1))))
                                 user_input='start'
                                 while not(isinstance(user_input,int)):
                                     try:
@@ -158,7 +159,7 @@ def main():
                                     case 10:wiersz='Ilość w BOM'
                                 if wybor in range(0,7):
                                     #lista2_1_t=[''] #tutaj wpisać listę z numerami tygodni
-                                    kolumna=menu(list(map(lambda x:x,range(1,okladka.weeks+1))))
+                                    kolumna=menup(list(map(lambda x:x,range(1,okladka.weeks+1))))
                                 user_input='start'
                                 while not(isinstance(user_input,int)):
                                     try:
@@ -187,7 +188,7 @@ def main():
                                     case 10:wiersz='Ilość w BOM'
                                 if wybor in range(0,7):
                                     #lista2_1_t=[''] #tutaj wpisać listę z numerami tygodni
-                                    kolumna=menu(list(map(lambda x:x,range(1,skora.weeks+1))))
+                                    kolumna=menup(list(map(lambda x:x,range(1,skora.weeks+1))))
                                 user_input='start'
                                 while not(isinstance(user_input,int)):
                                     try:
@@ -202,16 +203,14 @@ def main():
                                 elif wybor == 10: skora.req_amount=user_input
             case 3:
                 zeszyt.calculate()
-                papier.createTable(weeks)
-                papier.getTotalDemand()
+                papier.getTotalDemand(zeszyt.product_info.loc['Produkcja'].tolist())
                 papier.calculate()      
-                okladka.createTable(weeks)
-                okladka.getTotalDemand()
+                okladka.getTotalDemand(zeszyt.product_info.loc['Produkcja'].tolist())
                 okladka.calculate()  
-                skora.createTable(weeks)    
-                skora.getTotalDemand()
+                skora.getTotalDemand(okladka.product_info.loc['Planowane zamówienia'].tolist())
                 skora.calculate()      
             case 4:
+                print('Do zobaczenia!')
                 run=0
                 return 0
     return 1
