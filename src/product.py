@@ -2,7 +2,8 @@ import numpy as np
 import pandas as pd
 
 class product:
-    def __init__(self,production_time,production_amount,stock,req_amount,weeks):
+    def __init__(self,production_time,production_amount,stock,req_amount,weeks,name):
+        self.name = name
         self.production_amount = production_amount
         self.production_time = production_time
         self.stock = stock
@@ -11,7 +12,7 @@ class product:
         self.createTable(weeks)
         self.product_info
         self.fillValues()
-        self.calculateAvailable()
+        self.calculate()
 
 
     def createTable(self, weeks):
@@ -34,7 +35,7 @@ class product:
         else:
             print('wrong size of production_amount')
 
-    def calculateAvailable(self):
+    def calculate(self):
         self.product_info.loc['Dostępne',1] = self.stock + self.product_info.loc['Produkcja',1] - self.product_info.loc['Przewidywany popyt',1] 
         for i in range(1,self.weeks):
             self.product_info.loc['Dostępne',i+1] = (
@@ -43,13 +44,8 @@ class product:
             -self.product_info.loc['Przewidywany popyt',i+1]
             )
     
-    def getProductionTime(self):
-        return self.production_time
-
-    def getProduction(self):
-        return self.production_amount
-    
     def info(self):
+        print(self.name)
         print(self.product_info)
         print('Czas realizacji    ' ,self.production_time)
         print('Na stanie          ' ,self.stock)
