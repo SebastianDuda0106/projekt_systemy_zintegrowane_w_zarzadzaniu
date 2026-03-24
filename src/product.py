@@ -15,9 +15,6 @@ class product:
 
 
     def createTable(self, weeks):
-        list = []
-        for i in range(weeks):
-            list.append(0)
         self.product_info = pd.DataFrame(np.zeros((3, weeks)))
         self.product_info = self.product_info.astype(int)
         self.product_info.index = [
@@ -25,6 +22,7 @@ class product:
             'Produkcja',
             'Dostępne'
             ]
+        self.product_info.columns +=1
         
     def fillValues(self):
         if(len(self.req_amount) == self.weeks):
@@ -37,12 +35,18 @@ class product:
             print('wrong size of req_amount list')
 
     def calculateAvailable(self):
-        self.product_info.loc['Dostępne',0] = self.stock
-        for i in range(self.weeks-1):
+        self.product_info.loc['Dostępne',1] = self.stock
+        for i in range(1,self.weeks):
             print(i)
             self.product_info.loc['Dostępne',i+1] = self.product_info.loc['Produkcja',i+1] 
             +self.product_info.loc['Dostępne',i] 
             -self.product_info.loc['Przewidywany popyt',i+1]
+    
+    def getProductionTime(self):
+        return self.production_time
+
+    def getProduction(self):
+        return self.production_amount
     
     def info(self):
         print(self.product_info)
