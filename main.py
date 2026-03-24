@@ -1,10 +1,17 @@
 #Autorzy: Sebastian Duda, Jan Bielecki
+from src.product import product
+from src.component import component
 def main():
     print("Hello from projekt-systemy-zintegrowane-w-zarzadzaniu!")
     #hello(str(input("what is your name?\n")))
     x= tabela('acocieto')
     for row in x.table:
         print(row)
+
+    zeszyt = product(1,2,3,10)
+    zeszyt.info()
+    noga = component(1,1,1,1,6,4)
+    noga.info()
 
 # obj tabela
     # czas realizacji
