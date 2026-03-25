@@ -11,7 +11,6 @@ class product:
         self.weeks = weeks
         self.createTable(weeks)
         self.product_info
-        self.fillValues()
         self.calculate()
 
 
@@ -23,9 +22,9 @@ class product:
             'Produkcja',
             'Dostępne'
             ]
-        self.product_info.columns +=1
         
-    def fillValues(self):
+        self.product_info.columns +=1
+
         if(len(self.req_amount) == self.weeks):
             self.product_info.iloc[0] = self.req_amount
         else:

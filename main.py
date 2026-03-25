@@ -6,6 +6,7 @@ from src.menu import menu,menup
 def main():
     production_amount=[0,0,0,20,0,60,30]
     weeks=len(production_amount)
+
     zeszyt = product(
         name='zeszyt',
         production_time=2,
