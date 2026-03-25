@@ -20,12 +20,12 @@ class component:
         self.calculate()
 
     def createTable(self, weeks):
-        list = []
+        list = []                                                   #CREATING DATAFRAME
         for i in range(weeks):
             list.append(0)
-        self.product_info = pd.DataFrame(np.zeros((6, weeks)))
+        self.product_info = pd.DataFrame(np.zeros((6, weeks)))      #FILLING WITH 0
         self.product_info = self.product_info.astype(int)
-        self.product_info.index = [
+        self.product_info.index = [                                 #NAMING INDEXES
             'Całkowite zapotrzebowanie',
             'Planowane przyjęcia',
             'Przewidywane na stanie',

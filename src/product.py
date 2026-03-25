@@ -15,6 +15,7 @@ class product:
 
 
     def createTable(self, weeks):
+        ## CREATING DATAFRAME FOR MAIN PRODUCT AND FILLLING WITH 0
         self.product_info = pd.DataFrame(np.zeros((3, weeks)))
         self.product_info = self.product_info.astype(int)
         self.product_info.index = [
@@ -22,9 +23,9 @@ class product:
             'Produkcja',
             'Dostępne'
             ]
-        
         self.product_info.columns +=1
 
+        ## FILLING DATAFRAME WITH DATA IF LENGTH OF LISTS ARE CORRECT
         if(len(self.req_amount) == self.weeks):
             self.product_info.iloc[0] = self.req_amount
         else:
@@ -35,6 +36,7 @@ class product:
             print('wrong size of production_amount')
 
     def calculate(self):
+        ##CALCULATING AVAILABLE ROW BASED ON VALUES FROM WEEK BEFORE
         self.product_info.loc['Dostępne',1] = self.stock + self.product_info.loc['Produkcja',1] - self.product_info.loc['Przewidywany popyt',1] 
         for i in range(1,self.weeks):
             self.product_info.loc['Dostępne',i+1] = (
@@ -44,6 +46,7 @@ class product:
             )
     
     def info(self):
+        ## DISPLAY INFO ABOUT PRODUCT
         print(self.name)
         print(self.product_info)
         print('Czas realizacji    ' ,self.production_time)
