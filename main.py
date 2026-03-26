@@ -4,22 +4,22 @@ from src.component import component
 from src.menu import menu,menup
 
 def main():
-    production_amount=[0,0,0,20,0,60,30]
+    production_amount=[0,0,0,0,20,30,0,0,20]
     weeks=len(production_amount)
     zeszyt = product(
         name='zeszyt',
         production_time=2,
         stock=20,
-        req_amount=[0,0,20,10,50,0,0],
+        req_amount=[5,5,5,5,10,15,30,5,10],
         production_amount=production_amount,
         weeks=weeks
     )
     papier = component(
         name='papier',
         production_time=2,
-        batch_size=200,
+        batch_size=4000,
         BOM_level=1,
-        stock=60,
+        stock=1024,
         parent_assembly_time=zeszyt.production_time,
         parent_demand=zeszyt.production_amount,
         weeks=weeks,
@@ -28,7 +28,7 @@ def main():
     okladka = component(
         name='okladka',
         production_time=1,
-        batch_size=20,
+        batch_size=30,
         BOM_level=1,
         stock=5,
         parent_assembly_time=zeszyt.production_time,
