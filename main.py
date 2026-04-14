@@ -13,7 +13,7 @@ def edycja_mrp(tabela,tryb=0,logi=False):
     tabela.info()
     match(tryb):
         case 0:#wybór szczegółowy
-            wybor=menu(lista2_1_2_r)
+            wybor=menu(lista2_1_2_r,f'wprowadź numer wiersza(1-{len(lista2_1_2_r)}): ')
             match(wybor):
                 case 1:wiersz='Całkowite zapotrzebowanie'
                 case 2:wiersz='Planowane przyjęcia'
@@ -27,21 +27,21 @@ def edycja_mrp(tabela,tryb=0,logi=False):
                 case 10:wiersz='Ilość w BOM'
             if wybor in range(0,7):
                 #lista2_1_t=[''] #tutaj wpisać listę z numerami tygodni
-                kolumna=menup(list(map(lambda x:x,range(1,tabela.weeks+1))))
+                kolumna=menup(list(map(lambda x:x,range(1,tabela.weeks+1))),f'wprowadź numer tygodnia(1-{tabela.weeks}): ')
             user_input='start'
             while not(isinstance(user_input,int)):
                 try:
                     user_input=int(input('wprowadź wartość liczbową: '))
                 except:
-                    print('enter correct input')
+                    print('wprowadź poprawną liczbę')
             if wybor in range(0,7):
                 tabela.product_info.loc[wiersz,kolumna]=user_input
-            elif wybor == 7: tabela.production_time=user_input
-            elif wybor == 8: tabela.batch_size=user_input
-            elif wybor == 9: tabela.stock=user_input
-            elif wybor == 10: tabela.req_amount=user_input
+            elif wybor == 7:  tabela.production_time=tabela.product_info.loc[wiersz,kolumna]=user_input
+            elif wybor == 8:  tabela.batch_size     =tabela.product_info.loc[wiersz,kolumna]=user_input
+            elif wybor == 9:  tabela.stock          =tabela.product_info.loc[wiersz,kolumna]=user_input
+            elif wybor ==10:  tabela.req_amount     =tabela.product_info.loc[wiersz,kolumna]=user_input
         case 1:#wybór według wiersza
-            wybor=menu(lista2_1_2_r)
+            wybor=menu(lista2_1_2_r,f'wprowadź numer wiersza(1-{len(lista2_1_2_r)}): ')
             match(wybor):
                 case 1:wiersz='Całkowite zapotrzebowanie'
                 case 2:wiersz='Planowane przyjęcia'
@@ -63,11 +63,11 @@ def edycja_mrp(tabela,tryb=0,logi=False):
                     user_input='start'
                     while not(isinstance(user_input,int)):
                         try:
-                            user_input=int(input(f'tydzień numer:{kolumna} wprowadź wartość liczbową: '))
+                            user_input=int(input(f'\n{wiersz}, wprowadź nową wartość dla tygodnia {kolumna} : '))
                         except:
                             if not logi:os.system('cls')
                             tabela.info()
-                            print('enter correct input')
+                            print('wprowadź poprawną liczbę')
                     tabela.product_info.loc[wiersz,kolumna]=user_input
             if wybor in range(7,11):
                 if not logi:os.system('cls')
@@ -77,12 +77,12 @@ def edycja_mrp(tabela,tryb=0,logi=False):
                     try:
                         user_input=int(input(f'wprowadź wartość liczbową: '))
                     except:
-                        print('enter correct input')
+                        print('wprowadź poprawną liczbę')
 
-            if wybor == 7: tabela.production_time=user_input
-            elif wybor == 8: tabela.batch_size=user_input
-            elif wybor == 9: tabela.stock=user_input
-            elif wybor == 10: tabela.req_amount=user_input
+            if wybor   == 7: tabela.production_time=tabela.product_info.loc[wiersz,kolumna]=user_input
+            elif wybor == 8: tabela.batch_size     =tabela.product_info.loc[wiersz,kolumna]=user_input
+            elif wybor == 9: tabela.stock          =tabela.product_info.loc[wiersz,kolumna]=user_input
+            elif wybor ==10: tabela.req_amount     =tabela.product_info.loc[wiersz,kolumna]=user_input
         case 2:#wybór według tygodnia
             wybor=menu(lista2_1_2_tyg)
             match(wybor):
@@ -93,20 +93,21 @@ def edycja_mrp(tabela,tryb=0,logi=False):
                 case 5:wiersz='Ilość w BOM'
             if wybor == 1:
                 #lista2_1_t=[''] #tutaj wpisać listę z numerami tygodni
-                kolumna=menup(list(map(lambda x:x,range(1,tabela.weeks+1))))
+                kolumna=menup(list(map(lambda x:x,range(1,tabela.weeks+1))),f'wprowadź numer tygodnia od 1 do {tabela.weeks}:\n')
                 for wiersz in lista2_1_2_r[0:6]:
                     if not logi:os.system('cls')
                     tabela.info()
                     user_input='start'
                     while not(isinstance(user_input,int)):
                         try:
-                            user_input=int(input(f'{wiersz}: wprowadź wartość liczbową: '))
+                            user_input=int(input(f'wprowadź nową wartość do "{wiersz}":\n'))
                         except:
                             if not logi:os.system('cls')
                             tabela.info()
-                            print('enter correct input')
+                            print('wprowadź poprawną liczbę')
                     tabela.product_info.loc[wiersz,kolumna]=user_input
             if wybor in range(2,6):
+                kolumna=1
                 if not logi:os.system('cls')
                 tabela.info()
                 user_input='start'
@@ -116,12 +117,12 @@ def edycja_mrp(tabela,tryb=0,logi=False):
                     except:
                         if not logi:os.system('cls')
                         tabela.info()
-                        print('enter correct input')
+                        print('wprowadź poprawną liczbę')
 
-            if wybor == 2:tabela.production_time=user_input
-            elif wybor == 3: tabela.batch_size=user_input
-            elif wybor == 4: tabela.stock=user_input
-            elif wybor == 5: tabela.req_amount=user_input
+            if wybor   == 2: tabela.production_time=tabela.product_info.loc[wiersz,kolumna]=user_input
+            elif wybor == 3: tabela.batch_size     =tabela.product_info.loc[wiersz,kolumna]=user_input
+            elif wybor == 4: tabela.stock          =tabela.product_info.loc[wiersz,kolumna]=user_input
+            elif wybor == 5: tabela.req_amount     =tabela.product_info.loc[wiersz,kolumna]=user_input
     
     if not logi:os.system('cls')
     print("tabela po edycji")
@@ -183,27 +184,28 @@ def main(logi=False):
         weeks=weeks
     )
 
+    saymessage=False
+    tryb_edycji=2
     
     if logi:print("wczytywanie list menu")
-    lista1=['Wyświetl','Edytuj','Przelicz','Zamknij']
+    lista1=['Wyświetl','Edytuj','Przelicz','zapisz','odczytaj','ustawienia','Zamknij']
     lista1_1=['Wszystko','Główny Harmonogram Produkcji','Rekordy MRP']
     lista1_1_2=['[1]papier','[1]okładka','[2]skóra']
     lista2_1=['Główny Harmonogram Produkcji','Rekordy MRP']
     lista2_1_1_r=['Przewidywany popyt','Produkcja','Dostępne','Czas realizacji','Na stanie']
     lista2_1_2=['[1]papier','[1]okładka','[2]skóra']
     lista2_1_1_tyg=['Wartości w tygodniu','Czas realizacji','Na stanie']
+    lista6_1_t=['szczegółowy(wiersz,kolumna)','cały wiersz','cały tydzień']
     if logi == True:print("start programu")
 
-    przelicz=False
-    tryb_edycji=2
 
     run=1
     while run==1:
         #menu główne
         if not logi:os.system('cls')
-        if przelicz:
-            print('Przeliczone')
-            przelicz=False
+        if saymessage:
+            print(message)
+            saymessage=False
         match (menu(lista1)):
             case 1:#wyswietlanie
                 if not logi:os.system('cls')
@@ -263,11 +265,13 @@ def main(logi=False):
                 if not logi:os.system('cls')
                 match(menu(lista2_1)):
                     case 1:#GHP
+                        if not logi:os.system('cls')
                         zeszyt.info()
                         match(tryb_edycji):
                             case 0:#wybór szczegółowy
                                 #listy dla GHP
-                                wybor=menu(lista2_1_1_r)
+                                kolumna=1
+                                wybor=menu(lista2_1_1_r,f'wprowadź numer wiersza(1-{len(lista2_1_1_r)}): ')
                                 match(wybor):
                                     case 1:wiersz='Przewidywany popyt'
                                     case 2:wiersz='Produkcja'
@@ -276,20 +280,19 @@ def main(logi=False):
                                     case 5:wiersz='Na stanie'
                                 if wybor in range(0,4):
                                     #lista2_1_t=[''] #tutaj wpisać listę z numerami tygodni
-                                    kolumna=menup(list(map(lambda x:x,range(1,zeszyt.weeks+1))))
+                                    kolumna=menup(list(map(lambda x:x,range(1,zeszyt.weeks+1))),f'wprowadź numer tygodnia(1-{zeszyt.weeks}): ')
                                 user_input='start'
                                 while not(isinstance(user_input,int)):
                                     try:
-                                        user_input=int(input('wprowadź wartość liczbową: '))
+                                        user_input=int(input('wprowadź nową wartość: '))
                                     except:
-                                        print('enter correct input')
+                                        print('wprowadź poprawną liczbę')
                                 if wybor in range(0,4):
                                     zeszyt.product_info.loc[wiersz,kolumna]=user_input
-                                    print(zeszyt.product_info.loc[wiersz,kolumna])
-                                elif wybor == 4: zeszyt.production_time=user_input
-                                elif wybor == 5: zeszyt.stock=user_input
+                                elif wybor == 4: zeszyt.product_info.loc[wiersz,kolumna]=zeszyt.production_time=user_input
+                                elif wybor == 5: zeszyt.product_info.loc[wiersz,kolumna]=zeszyt.stock=user_input
                             case 1:#wybór według wiersza
-                                wybor=menu(lista2_1_1_r)
+                                wybor=menu(lista2_1_1_r,f'wprowadź numer wiersza(1-{len(lista2_1_1_r)}): ')
                                 match(wybor):
                                     case 1:wiersz='Przewidywany popyt'
                                     case 2:wiersz='Produkcja'
@@ -304,13 +307,14 @@ def main(logi=False):
                                         user_input='start'
                                         while not(isinstance(user_input,int)):
                                             try:
-                                                user_input=int(input(f'tydzień numer:{kolumna} wprowadź wartość liczbową: '))
+                                                user_input=int(input(f'\n{wiersz}, wprowadź nową wartość dla tygodnia {kolumna} : '))
                                             except:
                                                 if not logi:os.system('cls')
                                                 zeszyt.info()
-                                                print('enter correct input')
+                                                print('wprowadź poprawną liczbę')
                                         zeszyt.product_info.loc[wiersz,kolumna]=user_input
                                 if wybor in range(4,6):
+                                    kolumna=1
                                     if not logi:os.system('cls')
                                     zeszyt.info()
                                     user_input='start'
@@ -318,9 +322,9 @@ def main(logi=False):
                                         try:
                                             user_input=int(input(f'wprowadź wartość liczbową: '))
                                         except:
-                                            print('enter correct input')
-                                if wybor == 4: zeszyt.production_time=user_input
-                                elif wybor == 5: zeszyt.stock=user_input
+                                            print('wprowadź poprawną liczbę')
+                                if wybor == 4: zeszyt.product_info.loc[wiersz,kolumna]=zeszyt.production_time=user_input
+                                elif wybor == 5: zeszyt.product_info.loc[wiersz,kolumna]=zeszyt.stock=user_input
                             case 2:#wybór według tygodnia
                                 #listy dla GHP
                                 wybor=menu(lista2_1_1_tyg)
@@ -330,32 +334,33 @@ def main(logi=False):
                                     case 3:wiersz='Na stanie'
                                 if wybor ==1:
                                     #lista2_1_t=[''] #tutaj wpisać listę z numerami tygodni
-                                    kolumna=menup(list(map(lambda x:x,range(1,zeszyt.weeks+1))))
+                                    kolumna=menup(list(map(lambda x:x,range(1,zeszyt.weeks+1))),f'wprowadź numer tygodnia od 1 do {zeszyt.weeks}:\n')
                                     for wiersz in lista2_1_1_r[0:3]:
                                         if not logi:os.system('cls')
                                         zeszyt.info()
                                         user_input='start'
                                         while not(isinstance(user_input,int)):
                                             try:
-                                                user_input=int(input(f'{wiersz}: wprowadź wartość liczbową: '))
+                                                user_input=int(input(f'wprowadź nową wartość do "{wiersz}":\n'))
                                             except:
                                                 if not logi:os.system('cls')
                                                 zeszyt.info()
-                                                print('enter correct input')
+                                                print('wprowadź poprawną liczbę')
                                         zeszyt.product_info.loc[wiersz,kolumna]=user_input
-                                    if wybor in range(2,4):
-                                        if not logi:os.system('cls')
-                                        zeszyt.info()
-                                        user_input='start'
-                                        while not(isinstance(user_input,int)):
-                                            try:
-                                                user_input=int(input(f'wprowadź wartość liczbową: '))
-                                            except:
-                                                if not logi:os.system('cls')
-                                                zeszyt.info()
-                                                print('enter correct input')
-                                elif wybor == 4: zeszyt.production_time=user_input
-                                elif wybor == 5: zeszyt.stock=user_input
+                                if wybor in range(2,4):
+                                    kolumna=1
+                                    if not logi:os.system('cls')
+                                    zeszyt.info()
+                                    user_input='start'
+                                    while not(isinstance(user_input,int)):
+                                        try:
+                                            user_input=int(input(f'wprowadź wartość liczbową: '))
+                                        except:
+                                            if not logi:os.system('cls')
+                                            zeszyt.info()
+                                            print('wprowadź poprawną liczbę')
+                                if wybor == 2: zeszyt.product_info.loc[wiersz,kolumna]=zeszyt.production_time=user_input
+                                elif wybor == 3: zeszyt.product_info.loc[wiersz,kolumna]=zeszyt.stock=user_input
                         
                         if not logi:os.system('cls')
                         print("tabela po edycji")
@@ -364,8 +369,7 @@ def main(logi=False):
 
                         if not logi:os.system('cls')
                         zeszyt.info()
-
-                        
+                    
                     case 2:#MRP
                         #listy dla MRP
                         if not logi:os.system('cls')
@@ -395,11 +399,36 @@ def main(logi=False):
                 if logi == True:print("przeliczanie wartości w skora")
                 skora.getTotalDemand(okladka.product_info.loc['Planowane zamówienia'].tolist())
                 skora.calculate()
-                przelicz=True
-            case 4:#bye bye
+                saymessage=True
+                message='Przeliczone'
+            case 4:#zapis
+                zeszyt.saveToXLS()
+                papier.saveToXLS()
+                okladka.saveToXLS()
+                skora.saveToXLS()
+                saymessage=True
+                message='zapisano do pliku xls'
+            case 5:#odczyt
+                zeszyt.readXLS()
+                papier.readXLS()
+                okladka.readXLS()
+                skora.readXLS()
+                saymessage=True
+                message='odczytano z pliku xls'
+            case 6:#ustawienia
+                setting=True
+                while setting:
+                    if not logi:os.system('cls')
+                    lista6_1=[f'Zmień Tryb edycji (obecnie: {tryb_edycji+1} - {lista6_1_t[tryb_edycji]})\n 1 - szczegółowy(wiersz,kolumna),\n 2 - cały wiersz,\n 3 - cały tydzień','wróć']
+                    wybor=menu(lista6_1)
+                    match(wybor):
+                        case 1:
+                            tryb_edycji=(tryb_edycji+1)%3
+                        case 2:
+                            setting=False
+            case 7:#bye bye
                 print('Do zobaczenia!')
                 run=0
-                zeszyt.saveToXLS()
                 return 0
     return 1
 

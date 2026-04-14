@@ -1,6 +1,6 @@
 def menu(lista,message=0):
     if message == 0:
-        message=f'enter number from 1 to {len(lista)}\n'
+        message=f'wprowadź liczbę od 1 do {len(lista)}\n'
     max=len(lista)
     user_input='start'
     while not(isinstance(user_input,int) and (user_input in range(0+1,max+1))):
@@ -9,19 +9,18 @@ def menu(lista,message=0):
         try:
             user_input=int(input(message))
         except:
-            print('enter correct input')
+            print('wprowadź poprawną liczbę')
     return user_input
 def menup(lista,message=0):
     if message == 0:
-        message=f'enter number from 1 to {len(lista)}\n'
+        message=f'wprowadź liczbę od 1 do {len(lista)}\n'
     max=len(lista)
     user_input='start'
     while not(isinstance(user_input,int) and (user_input in range(0+1,max+1))):   
         try:
             user_input=int(input(message))
         except:
-            print('enter correct input')
-    print("entered: ",user_input)
+            print('wprowadź poprawną liczbę')
     return user_input
 
 lista1=['Wyświetl','Edytuj','Przelicz','Zamknij']
