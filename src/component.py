@@ -2,6 +2,8 @@ import numpy as np
 import pandas as pd
 import math
 import copy
+import xlsxwriter
+import openpyxl
 
 class component:
     def __init__(self,production_time,batch_size,BOM_level,stock,weeks,parent_assembly_time,parent_demand,name,req_amount=1):
@@ -33,7 +35,17 @@ class component:
             'Planowane zamówienia',
             'Planowane przyjęcie zamówień'
         ]
+        additional_info = pd.DataFrame([(self.production_time,self.batch_size,self.BOM_level,self.stock)]).transpose()
+        additional_info.index = [
+            'Czas realizacji',
+            'Wielkość partii',
+            'Poziom BOM',
+            'Na stanie',
+        ]
+        
+        self.product_info = pd.concat([self.product_info, additional_info])
         self.product_info.columns +=1
+        self.product_info = self.product_info.replace({np.nan: ''})
 
     def getTotalDemand(self,parent_demand=0):
         if parent_demand==0:temp_list = copy.deepcopy(self.parent_demand)
@@ -77,13 +89,18 @@ class component:
     def info(self):
         print(self.name)
         print(self.product_info)
-        print('Czas realizacji              ', self.production_time)
-        print('Wielkość partii              ', self.batch_size)
-        print('Poziom BOM                   ', self.BOM_level)
-        print('Na stanie                    ', self.stock)
         if self.req_amount > 1:
             print('Ilość w BOM                  ', self.req_amount,)
         print('\n')
+
+    def saveToXLS(self):
+
+        with pd.ExcelWriter(path=f'data.xlsx',mode='a',engine="openpyxl",if_sheet_exists="overlay") as writer:
+            self.product_info.to_excel(writer, sheet_name=self.name)
+
+    def readXLS(self):
+        self.product_info = pd.read_excel('data.xlsx', sheet_name=self.name, index_col=0, na_filter='')
+            
 
 
 

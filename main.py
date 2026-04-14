@@ -135,6 +135,7 @@ def main(logi=False):
     
     production_amount=[0,0,0,0,20,30,0,0,20]
     weeks=len(production_amount)
+    
 
     zeszyt = product(
         name='zeszyt',
@@ -398,6 +399,7 @@ def main(logi=False):
             case 4:#bye bye
                 print('Do zobaczenia!')
                 run=0
+                zeszyt.saveToXLS()
                 return 0
     return 1
 

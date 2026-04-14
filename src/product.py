@@ -1,5 +1,10 @@
 import numpy as np
 import pandas as pd
+from xml.dom import minidom
+import os 
+import xlsxwriter
+import openpyxl
+
 
 class product:
     def __init__(self,production_time,production_amount,stock,req_amount,weeks,name):
@@ -23,6 +28,13 @@ class product:
             'Produkcja',
             'Dostępne'
             ]
+        additional_info = pd.DataFrame([(self.production_time,self.stock)]).transpose()
+        additional_info.index = [
+            'Czas realizacji',
+            'Na stanie',
+        ]
+        self.product_info = pd.concat([self.product_info, additional_info])
+        self.product_info = self.product_info.replace({np.nan: ''})
         self.product_info.columns +=1
 
         ## FILLING DATAFRAME WITH DATA IF LENGTH OF LISTS ARE CORRECT
@@ -35,8 +47,9 @@ class product:
         else:
             print('wrong size of production_amount')
 
+        
     def calculate(self):
-        ##CALCULATING AVAILABLE ROW BASED ON VALUES FROM WEEK BEFORE
+        ## CALCULATING AVAILABLE ROW BASED ON VALUES FROM WEEK BEFORE
         self.product_info.loc['Dostępne',1] = self.stock + self.product_info.loc['Produkcja',1] - self.product_info.loc['Przewidywany popyt',1] 
         for i in range(1,self.weeks):
             self.product_info.loc['Dostępne',i+1] = (
@@ -49,5 +62,15 @@ class product:
         ## DISPLAY INFO ABOUT PRODUCT
         print(self.name)
         print(self.product_info)
-        print('Czas realizacji    ' ,self.production_time)
-        print('Na stanie          ' ,self.stock,'\n')
+
+    def saveToXLS(self):
+        try:
+            with pd.ExcelWriter(path='data.xlsx',mode='a', engine="openpyxl") as writer:
+                self.product_info.to_excel(writer, sheet_name=self.name)
+        except:
+            with pd.ExcelWriter(path='data.xlsx',mode='w', engine="openpyxl") as writer:
+                self.product_info.to_excel(writer, sheet_name=self.name)
+
+    def readXLS(self):
+        self.product_info = pd.read_excel('data.xlsx', sheet_name=self.name, index_col=0, na_filter='')
+        print(self.product_info)
