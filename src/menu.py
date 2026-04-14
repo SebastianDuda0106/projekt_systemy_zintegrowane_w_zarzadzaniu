@@ -32,3 +32,4 @@ lista2_1_1_r=['Przewidywany popyt','Produkcja','Dostępne','Czas realizacji','Na
 lista2_1_2=['[1]papier','[1]okładka','[2]skóra']
 lista2_1_2_r=['Całkowite zapotrzebowanie','Planowane przyjęcia','Przewidywane na stanie','Zapotrzebowanie netto',
                 'Planowane zamówienia','Planowane przyjęcie zamówień','Czas realizacji','Wielkość parii','Na stanie','Ilość w BOM']
+lista2_1_2_tyg=['Wartości w tygodniu','Czas realizacji','Wielkość parii','Na stanie','Ilość w BOM']
