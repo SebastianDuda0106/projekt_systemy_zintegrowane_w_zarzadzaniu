@@ -20,7 +20,6 @@ class component:
         self.req_amount = req_amount
         self.getTotalDemand()
         self.calculate()
-        self.saveToXLS()
 
     def createTable(self, weeks):
         list = []                                                   #CREATING DATAFRAME
@@ -46,7 +45,6 @@ class component:
         
         self.product_info = pd.concat([self.product_info, additional_info])
         self.product_info.columns +=1
-
         self.product_info = self.product_info.replace({np.nan: ''})
 
     def getTotalDemand(self,parent_demand=0):
@@ -99,6 +97,9 @@ class component:
 
         with pd.ExcelWriter(path=f'data.xlsx',mode='a',engine="openpyxl",if_sheet_exists="overlay") as writer:
             self.product_info.to_excel(writer, sheet_name=self.name)
+
+    def readXLS(self):
+        self.product_info = pd.read_excel('data.xlsx', sheet_name=self.name, index_col=0, na_filter='')
             
 
 
