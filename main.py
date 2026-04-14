@@ -6,6 +6,7 @@ from src.menu import menu,menup
 def main():
     production_amount=[0,0,0,0,20,30,0,0,20]
     weeks=len(production_amount)
+    
 
     zeszyt = product(
         name='zeszyt',
@@ -214,6 +215,7 @@ def main():
             case 4:
                 print('Do zobaczenia!')
                 run=0
+                zeszyt.saveToXLS()
                 return 0
     return 1
 
