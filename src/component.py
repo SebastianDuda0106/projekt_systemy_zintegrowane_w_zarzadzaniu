@@ -80,6 +80,7 @@ class component:
             self.product_info.loc['Przewidywane na stanie',i+1] = (
             self.product_info.loc['Planowane przyjęcie zamówień',i+1] 
             +self.product_info.loc['Przewidywane na stanie',i]
+            +self.product_info.loc['Planowane przyjęcia', i+1]
             -self.product_info.loc['Całkowite zapotrzebowanie',i+1]
             )
             if(self.product_info.loc['Przewidywane na stanie',i+1] < 0):
