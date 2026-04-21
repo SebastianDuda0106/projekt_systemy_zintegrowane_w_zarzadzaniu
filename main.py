@@ -2,16 +2,19 @@
 logi_global=True
 
 if logi_global:
-    print("wczytywanie bibliotek (1/4)")
+    print("wczytywanie bibliotek (1/5)")
 from src.product import product
 if logi_global:
-    print("wczytywanie bibliotek (2/4)")
+    print("wczytywanie bibliotek (2/5)")
 from src.component import component
 if logi_global:
-    print("wczytywanie bibliotek (3/4)")
+    print("wczytywanie bibliotek (3/5)")
 from src.menu import menu,menup,lista2_1_2_r,lista2_1_1_r,lista2_1_1_tyg,lista2_1_2_tyg,lista6_1_t,lista1,listatest,listatest_1
 if logi_global:
-    print("wczytywanie bibliotek (4/4)")
+    print("wczytywanie bibliotek (4/5)")
+from src.menu import browse_file
+if logi_global:
+    print("wczytywanie bibliotek (5/5)")
 import os
 
 clear_console=lambda: os.system('clear')
@@ -138,6 +141,7 @@ def edycja_ghp(tabela,tryb=0,logi=False):
 def edycja_mrp(tabela,tryb=0,logi=False):
     if not logi:clear_console()
     tabela.info()
+    kolumna=1
     match(tryb):
         case 0:#wybór szczegółowy
             wybor=menu(lista2_1_2_r,f'wprowadź numer wiersza(1-{len(lista2_1_2_r)}): ')
@@ -149,7 +153,7 @@ def edycja_mrp(tabela,tryb=0,logi=False):
                 case 5:wiersz='Planowane zamówienia'
                 case 6:wiersz='Planowane przyjęcie zamówień'
                 case 7:wiersz='Czas realizacji'
-                case 8:wiersz='Wielkość parii'
+                case 8:wiersz='Wielkość partii'
                 case 9:wiersz='Na stanie'
                 case 10:wiersz='Ilość w BOM'
             if wybor in range(0,7):
@@ -166,7 +170,7 @@ def edycja_mrp(tabela,tryb=0,logi=False):
             elif wybor == 7:  tabela.production_time=tabela.product_info.loc[wiersz,kolumna]=user_input
             elif wybor == 8:  tabela.batch_size     =tabela.product_info.loc[wiersz,kolumna]=user_input
             elif wybor == 9:  tabela.stock          =tabela.product_info.loc[wiersz,kolumna]=user_input
-            elif wybor ==10:  tabela.req_amount     =tabela.product_info.loc[wiersz,kolumna]=user_input
+            elif wybor ==10:  tabela.req_amount     =user_input
         case 1:#wybór według wiersza
             wybor=menu(lista2_1_2_r,f'wprowadź numer wiersza(1-{len(lista2_1_2_r)}): ')
             match(wybor):
@@ -177,7 +181,7 @@ def edycja_mrp(tabela,tryb=0,logi=False):
                 case 5:wiersz='Planowane zamówienia'
                 case 6:wiersz='Planowane przyjęcie zamówień'
                 case 7:wiersz='Czas realizacji'
-                case 8:wiersz='Wielkość parii'
+                case 8:wiersz='Wielkość partii'
                 case 9:wiersz='Na stanie'
                 case 10:wiersz='Ilość w BOM'
             if not logi:clear_console()
@@ -215,7 +219,7 @@ def edycja_mrp(tabela,tryb=0,logi=False):
             match(wybor):
                 case 1:wiersz=0
                 case 2:wiersz='Czas realizacji'
-                case 3:wiersz='Wielkość parii'
+                case 3:wiersz='Wielkość partii'
                 case 4:wiersz='Na stanie'
                 case 5:wiersz='Ilość w BOM'
             if wybor == 1:
@@ -272,17 +276,23 @@ def menu_tabela(tabela,tryb_edycji,logi,ghp=False):
             case 2:
                 tabela.calculate()
             case 3:
-                tabela.saveToXLS()
+                try:
+                    path = browse_file(tabela.name,True)
+                    tabela.saveToXLS(path)
+                except:
+                    input('Nie udało się zapisać, naciśnij enter aby kontynuować\n')
             case 4:
-                tabela.readXLS()
+                try:
+                    path = browse_file()
+                    tabela.readXLS(path)
+                except:
+                    input('Nie udało się odzczytać, naciśnij enter aby kontynuować\n')
             case 5:
                 tryb_edycji=zmien_tryb_edycji(tryb_edycji,logi)
             case 6:
                 wyswietlanie=False
 
 def main(logi=False):
-
-    
     if logi:print("wczytywanie wartości domyślnych GHP")
     
     production_amount=[0,0,0,0,20,30,0,0,20]
@@ -336,7 +346,7 @@ def main(logi=False):
     )
 
     saymessage=False
-    tryb_edycji=2
+    tryb_edycji=0
     
     if logi:print("wczytywanie list menu")
     if logi == True:print("start programu")
@@ -350,17 +360,20 @@ def main(logi=False):
             saymessage=False
         match (menu(lista1)):
             case 1:#tabele
-                if not logi:clear_console()
-                match(menu(listatest)):
-                    case 1:#GHP
-                        menu_tabela(zeszyt,tryb_edycji,logi,True)
-                    case 2:#papier
-                        menu_tabela(papier,tryb_edycji,logi)
-                    case 3:#okladka
-                        menu_tabela(okladka,tryb_edycji,logi)
-                    case 4:#skora
-                        menu_tabela(skora,tryb_edycji,logi)
-                pass
+                tabele=True
+                while tabele:
+                    if not logi:clear_console()
+                    match(menu(listatest)):
+                        case 1:#GHP
+                            menu_tabela(zeszyt,tryb_edycji,logi,True)
+                        case 2:#papier
+                            menu_tabela(papier,tryb_edycji,logi)
+                        case 3:#okladka
+                            menu_tabela(okladka,tryb_edycji,logi)
+                        case 4:#skora
+                            menu_tabela(skora,tryb_edycji,logi)
+                        case 5:#bye
+                            tabele=False        
             case 2:#przeliczanie
                 if logi == True:print("przeliczanie wartości w tabelach")
                 if logi == True:print("przeliczanie wartości w GHP")                 
@@ -380,26 +393,43 @@ def main(logi=False):
                 saymessage=True
                 message='Przeliczone'
             case 3:#zapis
-                zeszyt.saveToXLS()
-                papier.saveToXLS()
-                okladka.saveToXLS()
-                skora.saveToXLS()
-                saymessage=True
-                message='zapisano do pliku xls'
-            case 4:#odczyt
                 try:
-                    zeszyt.readXLS()
-                    papier.readXLS()
-                    okladka.readXLS()
-                    skora.readXLS()
+                    path = browse_file('data',True)
+                    zeszyt.saveToXLS(path)
+                    papier.saveToXLS(path)
+                    okladka.saveToXLS(path)
+                    skora.saveToXLS(path)
                     saymessage=True
-                    message='odczytano z pliku xls'
+                    message='zapisano do pliku xlsx'
                 except:
                     saymessage=True
-                    message='NIE odczytano z pliku xls!'
+                    message='NIE zapisano do pliku xlsx!'
+            case 4:#odczyt
+                path = browse_file()
+                saymessage=True
+                message=''
+                try:
+                    zeszyt.readXLS(path)
+                    message+='odczytano tabele "zeszyt" z pliku xlsx\n'
+                except:
+                    message+='NIE odczytano tabeli "zeszyt" z pliku xlsx!\n'
+                try:
+                    papier.readXLS(path)
+                    message+='odczytano tabele "papier" z pliku xlsx\n'
+                except:
+                    message+='NIE odczytano tabeli "papier" z pliku xlsx!\n'
+                try:
+                    okladka.readXLS(path)
+                    message+='odczytano tabele "okladka" z pliku xlsx\n'
+                except:
+                    message+='NIE odczytano tabeli "okladka" z pliku xlsx!\n'
+                try:
+                    skora.readXLS(path)
+                    message+='odczytano tabele "skora" z pliku xlsx\n'
+                except:
+                    message+='NIE odczytano tabeli "skora" z pliku xlsx!\n'
             case 5:#ustawienia
-                zmien_tryb_edycji()
-                    
+                zmien_tryb_edycji()         
             case 6:#bye bye
                 print('Do zobaczenia!')
                 run=0

@@ -1,3 +1,20 @@
+import tkinter
+from tkinter import filedialog
+import os
+
+def browse_file(filename='data',zapis=False):
+    root = tkinter.Tk()
+    root.withdraw()
+    currdir = os.getcwd()
+    #odczyt
+    fname=currdir
+    if not zapis:
+        fname = filedialog.askopenfilename(title='odczyt',parent=root, initialdir=currdir, filetypes = (("excel files", "*.xlsx"),("All files", "*") ))
+    #zapis
+    else:
+        fname = filedialog.asksaveasfilename(defaultextension=".xlsx",title='zapisz',initialfile=filename, filetypes=[("excel files", "*.xlsx"), ("All files", "*.*")])
+    return fname
+
 def menu(lista,message=0):
     if message == 0:
         message=f'wprowadź liczbę od 1 do {len(lista)}\n'
@@ -31,9 +48,9 @@ lista2_1_1_r=['Przewidywany popyt','Produkcja','Dostępne','Czas realizacji','Na
 lista2_1_1_tyg=['Wartości w tygodniu','Czas realizacji','Na stanie']
 lista2_1_2=['[1]papier','[1]okładka','[2]skóra']
 lista2_1_2_r=['Całkowite zapotrzebowanie','Planowane przyjęcia','Przewidywane na stanie','Zapotrzebowanie netto',
-                'Planowane zamówienia','Planowane przyjęcie zamówień','Czas realizacji','Wielkość parii','Na stanie','Ilość w BOM']
-lista2_1_2_tyg=['Wartości w tygodniu','Czas realizacji','Wielkość parii','Na stanie','Ilość w BOM']
+                'Planowane zamówienia','Planowane przyjęcie zamówień','Czas realizacji','Wielkość partii','Na stanie','Ilość w BOM']
+lista2_1_2_tyg=['Wartości w tygodniu','Czas realizacji','Wielkość partii','Na stanie','Ilość w BOM']
 lista6_1_t=['szczegółowy(wiersz,kolumna)','cały wiersz','cały tydzień']
 
-listatest=['Główny Harmonogram Produkcji','[1]papier','[1]okładka','[2]skóra']
-listatest_1=['edytuj','przelicz','zapisz','odczytaj','zmień tryb edycji','wróć do menu']
+listatest=['Główny Harmonogram Produkcji','[1]papier','[1]okładka','[2]skóra','wróć do menu']
+listatest_1=['edytuj','przelicz','zapisz','odczytaj','zmień tryb edycji','wróć do tabel']
