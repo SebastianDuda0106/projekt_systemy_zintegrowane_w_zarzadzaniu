@@ -63,12 +63,12 @@ class product:
         print(self.name)
         print(self.product_info)
 
-    def saveToXLS(self):
+    def saveToXLS(self, path='data.xlsx'):
         try:
-            with pd.ExcelWriter(path='data.xlsx',mode='a', engine="openpyxl") as writer:
+            with pd.ExcelWriter(path=path,mode='a', engine="openpyxl",if_sheet_exists='overlay') as writer:
                 self.product_info.to_excel(writer, sheet_name=self.name)
         except:
-            with pd.ExcelWriter(path='data.xlsx',mode='w', engine="openpyxl") as writer:
+            with pd.ExcelWriter(path=path,mode='w', engine="openpyxl") as writer:
                 self.product_info.to_excel(writer, sheet_name=self.name)
 
     def readXLS(self):
