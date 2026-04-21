@@ -23,12 +23,17 @@ def menup(lista,message=0):
             print('wprowadź poprawną liczbę')
     return user_input
 
-lista1=['Wyświetl','Edytuj','Przelicz','Zamknij']
+lista1=['tabele','Przelicz wszystko','zapisz wszystko','odczytaj wszystko','ustawienia','Zamknij']
 lista1_1=['Wszystko','Główny Harmonogram Produkcji','Rekordy MRP']
 lista1_1_2=['[1]papier','[1]okładka','[2]skóra']
 lista2_1=['Główny Harmonogram Produkcji','Rekordy MRP']
 lista2_1_1_r=['Przewidywany popyt','Produkcja','Dostępne','Czas realizacji','Na stanie']
+lista2_1_1_tyg=['Wartości w tygodniu','Czas realizacji','Na stanie']
 lista2_1_2=['[1]papier','[1]okładka','[2]skóra']
 lista2_1_2_r=['Całkowite zapotrzebowanie','Planowane przyjęcia','Przewidywane na stanie','Zapotrzebowanie netto',
                 'Planowane zamówienia','Planowane przyjęcie zamówień','Czas realizacji','Wielkość parii','Na stanie','Ilość w BOM']
 lista2_1_2_tyg=['Wartości w tygodniu','Czas realizacji','Wielkość parii','Na stanie','Ilość w BOM']
+lista6_1_t=['szczegółowy(wiersz,kolumna)','cały wiersz','cały tydzień']
+
+listatest=['Główny Harmonogram Produkcji','[1]papier','[1]okładka','[2]skóra']
+listatest_1=['edytuj','przelicz','zapisz','odczytaj','zmień tryb edycji','wróć do menu']
