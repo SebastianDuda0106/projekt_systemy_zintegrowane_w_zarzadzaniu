@@ -1,18 +1,26 @@
-import tkinter
+try:
+    import tkinter
+    tkinter_import=True
+except:
+    tkinter_import=False
 from tkinter import filedialog
 import os
 
 def browse_file(filename='data',zapis=False):
-    root = tkinter.Tk()
-    root.withdraw()
-    currdir = os.getcwd()
-    #odczyt
-    fname=currdir
-    if not zapis:
-        fname = filedialog.askopenfilename(title='odczyt',parent=root, initialdir=currdir, filetypes = (("excel files", "*.xlsx"),("All files", "*") ))
-    #zapis
+    if tkinter_import:
+        root = tkinter.Tk()
+        root.withdraw()
+        currdir = os.getcwd()
+        #odczyt
+        fname=currdir
+        if not zapis:
+            fname = filedialog.askopenfilename(title='odczyt',parent=root, initialdir=currdir, filetypes = (("excel files", "*.xlsx"),("All files", "*") ))
+        #zapis
+        else:
+            fname = filedialog.asksaveasfilename(defaultextension=".xlsx",title='zapisz',initialfile=filename, filetypes=[("excel files", "*.xlsx"), ("All files", "*.*")])
     else:
-        fname = filedialog.asksaveasfilename(defaultextension=".xlsx",title='zapisz',initialfile=filename, filetypes=[("excel files", "*.xlsx"), ("All files", "*.*")])
+        fname='data.xlsx'
+
     return fname
 
 def menu(lista,message=0):

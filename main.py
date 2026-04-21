@@ -17,7 +17,8 @@ if logi_global:
     print("wczytywanie bibliotek (5/5)")
 import os
 
-clear_console=lambda: os.system('clear')
+clear_console=lambda: os.system('cls' if os.name == 'nt' else 'clear')
+
 
 
 def zmien_tryb_edycji(tryb_edycji,logi):
