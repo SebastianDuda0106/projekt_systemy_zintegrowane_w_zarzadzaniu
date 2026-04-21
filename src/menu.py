@@ -1,9 +1,9 @@
 try:
     import tkinter
     tkinter_import=True
-except:
+    from tkinter import filedialog
+except ImportError:
     tkinter_import=False
-from tkinter import filedialog
 import os
 
 def browse_file(filename='data',zapis=False):
