@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-import math
 import copy
 import xlsxwriter
 import openpyxl
@@ -45,7 +44,7 @@ class component:
         self.product_info = pd.concat([self.product_info, additional_info])
         self.product_info.columns +=1
         self.product_info = self.product_info.replace({np.nan: ''})
-        self.clearTable()
+        self.clearTable(1,6)
 
 
     def getTotalDemand(self,parent_demand=0):
@@ -58,6 +57,7 @@ class component:
         self.product_info.loc['Całkowite zapotrzebowanie'] = temp_list
 
     def calculate(self):
+        self.clearTable(5,6)
         current_order_week = 0 + self.production_time
         if current_order_week==0:   
             current_order_week += 1
@@ -85,9 +85,8 @@ class component:
                     self.product_info.loc['Planowane zamówienia', i+1-self.production_time] = 0
                     current_order_week += 1
 
-    def clearTable(self):
-        self.product_info[1:6] = 0
-
+    def clearTable(self, a, b):
+        self.product_info[a:b] = 0
                 
     def info(self):
         print(self.name)
@@ -106,7 +105,7 @@ class component:
                 self.product_info.to_excel(writer, sheet_name=self.name)
 
     def readXLS(self, path='data.xlsx'):
-        self.product_info = pd.read_excel(path=path, sheet_name=self.name, index_col=0, na_filter='')
+        self.product_info = pd.read_excel(path, sheet_name=self.name, index_col=0, na_filter='')
             
 
 

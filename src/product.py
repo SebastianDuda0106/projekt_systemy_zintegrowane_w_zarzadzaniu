@@ -72,5 +72,5 @@ class product:
                 self.product_info.to_excel(writer, sheet_name=self.name)
 
     def readXLS(self, path='data.xlsx'):
-        self.product_info = pd.read_excel(path=path, sheet_name=self.name, index_col=0, na_filter='')
+        self.product_info = pd.read_excel(path, sheet_name=self.name, index_col=0, na_filter='')
         print(self.product_info)
