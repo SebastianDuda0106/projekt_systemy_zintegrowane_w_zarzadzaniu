@@ -42,10 +42,11 @@ class component:
             'Poziom BOM',
             'Na stanie',
         ]
-        
         self.product_info = pd.concat([self.product_info, additional_info])
         self.product_info.columns +=1
         self.product_info = self.product_info.replace({np.nan: ''})
+        self.clearTable()
+
 
     def getTotalDemand(self,parent_demand=0):
         if parent_demand==0:temp_list = copy.deepcopy(self.parent_demand)
@@ -57,34 +58,35 @@ class component:
         self.product_info.loc['Całkowite zapotrzebowanie'] = temp_list
 
     def calculate(self):
-        last_week_order = 0
-        total_required = self.product_info.loc['Całkowite zapotrzebowanie'].sum() - self.stock
-        number_of_orders = math.ceil(int(total_required) / int(self.batch_size))
-
-        for i in range(self.weeks, 1, -1):
-            if(self.product_info.loc['Całkowite zapotrzebowanie',i] > 0):
-                last_week_order = i
-                break
-        
-        for i in range(number_of_orders):
-            if(last_week_order - self.production_time > 0):
-                self.product_info.loc['Planowane przyjęcie zamówień',last_week_order] = self.batch_size
-                self.product_info.loc['Planowane zamówienia',last_week_order - self.production_time] = self.batch_size
-                last_week_order -= self.production_time
-            else:
-                break
-
+        current_order_week = 0 + self.production_time
+        if current_order_week==0:   
+            current_order_week += 1
 
         self.product_info.loc['Przewidywane na stanie',1] = self.stock -self.product_info.loc['Całkowite zapotrzebowanie',1] 
         for i in range(1,self.weeks):
-            self.product_info.loc['Przewidywane na stanie',i+1] = (
-            self.product_info.loc['Planowane przyjęcie zamówień',i+1] 
+            self.product_info.loc['Przewidywane na stanie',i+1] = ( 
             +self.product_info.loc['Przewidywane na stanie',i]
             +self.product_info.loc['Planowane przyjęcia', i+1]
             -self.product_info.loc['Całkowite zapotrzebowanie',i+1]
             )
             if(self.product_info.loc['Przewidywane na stanie',i+1] < 0):
                 self.product_info.loc['Zapotrzebowanie netto',i+1] = abs(self.product_info.loc['Przewidywane na stanie',i+1])
+            else:
+                self.product_info.loc['Zapotrzebowanie netto',i+1] = 0
+            if(self.product_info.loc['Zapotrzebowanie netto', i+1] > 0):
+                if(current_order_week == i):
+                    self.product_info.loc['Planowane przyjęcie zamówień', i+1] = self.batch_size
+                    self.product_info.loc['Planowane zamówienia', i+1-self.production_time] = self.batch_size
+                    current_order_week += self.production_time
+                    self.product_info.loc['Przewidywane na stanie', i+1] += self.batch_size
+            else:
+                if(current_order_week == i):
+                    self.product_info.loc['Planowane przyjęcie zamówień', i+1] = 0
+                    self.product_info.loc['Planowane zamówienia', i+1-self.production_time] = 0
+                    current_order_week += 1
+
+    def clearTable(self):
+        self.product_info[1:6] = 0
 
                 
     def info(self):
