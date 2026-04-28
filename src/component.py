@@ -62,7 +62,7 @@ class component:
         if current_order_week==0:   
             current_order_week += 1
 
-        self.product_info.loc['Przewidywane na stanie',1] = self.stock -self.product_info.loc['Całkowite zapotrzebowanie',1] 
+        self.product_info.loc['Przewidywane na stanie',1] = self.stock -self.product_info.loc['Całkowite zapotrzebowanie',1]+self.product_info.loc['Planowane przyjęcia',1] 
         for i in range(1,self.weeks):
             self.product_info.loc['Przewidywane na stanie',i+1] = ( 
             +self.product_info.loc['Przewidywane na stanie',i]

@@ -52,13 +52,12 @@ lista1=['tabele','Przelicz wszystko','zapisz wszystko','odczytaj wszystko','usta
 lista1_1=['Wszystko','Główny Harmonogram Produkcji','Rekordy MRP']
 lista1_1_2=['[1]papier','[1]okładka','[2]skóra']
 lista2_1=['Główny Harmonogram Produkcji','Rekordy MRP']
-lista2_1_1_r=['Przewidywany popyt','Produkcja','Dostępne','Czas realizacji','Na stanie']
+lista2_1_1_r=['Przewidywany popyt','Produkcja','Czas realizacji','Na stanie']
 lista2_1_1_tyg=['Wartości w tygodniu','Czas realizacji','Na stanie']
 lista2_1_2=['[1]papier','[1]okładka','[2]skóra']
-lista2_1_2_r=['Całkowite zapotrzebowanie','Planowane przyjęcia','Przewidywane na stanie','Zapotrzebowanie netto',
-                'Planowane zamówienia','Planowane przyjęcie zamówień','Czas realizacji','Wielkość partii','Na stanie','Ilość w BOM']
+lista2_1_2_r=['Planowane przyjęcia','Czas realizacji','Wielkość partii','Na stanie','Ilość w BOM']
 lista2_1_2_tyg=['Wartości w tygodniu','Czas realizacji','Wielkość partii','Na stanie','Ilość w BOM']
 lista6_1_t=['szczegółowy(wiersz,kolumna)','cały wiersz','cały tydzień']
 
-listatest=['Główny Harmonogram Produkcji','[1]papier','[1]okładka','[2]skóra','wróć do menu']
+listatest=['[0]zeszyt(GHP)','[1]papier','[1]okładka','[2]skóra','wróć do menu']
 listatest_1=['edytuj','przelicz','zapisz','odczytaj','zmień tryb edycji','wróć do tabel']
