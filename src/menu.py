@@ -59,5 +59,5 @@ lista2_1_2_r=['Planowane przyjęcia','Czas realizacji','Wielkość partii','Na s
 lista2_1_2_tyg=['Wartości w tygodniu','Czas realizacji','Wielkość partii','Na stanie','Ilość w BOM']
 lista6_1_t=['szczegółowy(wiersz,kolumna)','cały wiersz','cały tydzień']
 
-listatest=['[0]zeszyt(GHP)','[1]papier','[1]okładka','[2]skóra','wróć do menu']
+listatest=['[0]zeszyt(GHP)','[1]papier(zeszyt)','[1]okładka(zeszyt)','[2]skóra(okładka)','wróć do menu']
 listatest_1=['edytuj','przelicz','zapisz','odczytaj','zmień tryb edycji','wróć do tabel']

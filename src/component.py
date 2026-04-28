@@ -34,12 +34,12 @@ class component:
             'Planowane zamówienia',
             'Planowane przyjęcie zamówień'
         ]
-        additional_info = pd.DataFrame([(self.production_time,self.batch_size,self.BOM_level,self.stock)]).transpose()
+        additional_info = pd.DataFrame([(self.production_time,self.batch_size,self.stock,self.BOM_level)]).transpose()
         additional_info.index = [
             'Czas realizacji',
             'Wielkość partii',
-            'Poziom BOM',
             'Na stanie',
+            'Poziom BOM',
         ]
         self.product_info = pd.concat([self.product_info, additional_info])
         self.product_info.columns +=1
